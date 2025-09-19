@@ -1,4 +1,6 @@
-﻿namespace TicketyBoo.Models
+﻿using Microsoft.Extensions.Primitives;
+
+namespace TicketyBoo.Models
 {
     public class Event
     {
@@ -8,7 +10,9 @@
 
         public string Description { get; set; } = string.Empty;
 
-        public string FileName { get; set; } = string.Empty;
+        public string Location { get; set; } = string.Empty;
+
+        public string Organizer { get; set; } = string.Empty;
 
         public DateTime Creation { get; set; }
 
