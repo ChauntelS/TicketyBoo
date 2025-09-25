@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Events\" />
+    <Folder Include="Views\Haunts\" />
   </ItemGroup>
 
 </Project>

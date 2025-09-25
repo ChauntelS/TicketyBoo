@@ -2,7 +2,7 @@
 
 namespace TicketyBoo.Controllers
 {
-    public class EventsController : Controller
+    public class HauntsController : Controller
     {
         public IActionResult Index()
         {
