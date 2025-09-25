@@ -14,7 +14,7 @@
         public string Location { get; set; } = string.Empty;
 
         //Navigation property
-        public List<Event>? Events { get; set; } // ? allows the list to be null
+        public List<Haunts>? Events { get; set; } // ? allows the list to be null
 
     }
 }

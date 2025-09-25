@@ -2,7 +2,7 @@
 
 namespace TicketyBoo.Models
 {
-    public class Event
+    public class Haunts
     {
         public int Id { get; set; }
 
