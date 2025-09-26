@@ -7,7 +7,6 @@
 
         public string Title { get; set; } = string.Empty;
 
-        public string Type { get; set; }
 
         public string Organizer { get; set; } = string.Empty;
 

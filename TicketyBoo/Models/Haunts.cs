@@ -14,6 +14,10 @@ namespace TicketyBoo.Models
 
         public string Organizer { get; set; } = string.Empty;
 
+        public int ScareLevel { get; set; } // Scale of 1-10
+
+
+
         public DateTime Creation { get; set; }
 
         //Foreign key

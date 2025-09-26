@@ -1,8 +1,28 @@
-﻿@{
+﻿@model List<TicketyBoo.Models.Haunts>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@* <h1>All Haunts</h1>
+
+<table class="table w-50">
+       <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th>Scare Level</th>
+        </tr>
+        @foreach (var haunt in Model)
+        {
+            <tr>
+           
+                <td>@haunt.Title</td>
+                <td>@haunt.Description</td>
+                <td>@haunt.Location</td>
+                <td>@haunt.ScareLevel</td>
+                <td>@haunt.Organizer</td>
+            </tr>
+        }
+</table> *@
+
