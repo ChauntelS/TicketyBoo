@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.Organizer)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Location)
+                @Html.DisplayNameFor(model => model.ScareType)
             </th>
             <th></th>
         </tr>
@@ -34,7 +34,7 @@
                 @Html.DisplayFor(modelItem => item.Organizer)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Location)
+                    @Html.DisplayFor(modelItem => item.ScareType)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
