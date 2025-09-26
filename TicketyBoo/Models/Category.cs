@@ -10,7 +10,7 @@
 
         public string Organizer { get; set; } = string.Empty;
 
-        public string ScareType { get; set; } = string.Empty;
+        public int ScareLevel { get; set; } 
 
         //Navigation property
         public List<Haunt>? Events { get; set; } // ? allows the list to be null

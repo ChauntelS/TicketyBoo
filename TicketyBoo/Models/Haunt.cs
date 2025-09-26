@@ -14,7 +14,7 @@ namespace TicketyBoo.Models
 
         public string Organizer { get; set; } = string.Empty;
 
-        public int ScareLevel { get; set; } // Scale of 1-10
+        public int ScareLevel { get; set; } // Scale of 1-5
 
 
 
