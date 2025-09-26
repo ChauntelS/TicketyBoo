@@ -15,5 +15,6 @@ namespace TicketyBoo.Data
         }
 
         public DbSet<TicketyBoo.Models.Haunt> Haunt { get; set; } = default!;
+        public DbSet<TicketyBoo.Models.Category> Category { get; set; } = default!;
     }
 }
