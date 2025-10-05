@@ -4,6 +4,8 @@ namespace TicketyBoo.Models
 {
     public class Haunt
     {
+        public string ImagePath { get; set; } = string.Empty;
+
         public int Id { get; set; }
 
         public string Title { get; set; } = string.Empty;
@@ -15,8 +17,6 @@ namespace TicketyBoo.Models
         public string Organizer { get; set; } = string.Empty;
 
         public int ScareLevel { get; set; } // Scale of 1-5
-
-
 
         public DateTime Creation { get; set; }
 

@@ -1,10 +1,12 @@
 html {
   font-size: 14px;
+
 }
 
 @media (min-width: 768px) {
   html {
     font-size: 16px;
+    
   }
 }
 
@@ -22,9 +24,8 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-
-
     margin-bottom: 60px;
+    font-family: 'Century Gothic', sans-serif;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {

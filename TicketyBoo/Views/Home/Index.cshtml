@@ -1,28 +1,29 @@
-﻿@* @model List<TicketyBoo.Models.Haunt>
+﻿@model List<TicketyBoo.Models.Haunt>
 
 @{
     ViewData["Title"] = "Home Page";
-} *@
+}
 
-@* <h1>All Haunts</h1>
+<h1 class="mb-4 text-center text-light">Upcoming Haunts</h1>
 
-<table class="table w-50">
-       <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Location</th>
-            <th>Scare Level</th>
-        </tr>
-        @foreach (var haunt in Model)
-        {
-            <tr>
-           
-                <td>@haunt.Title</td>
-                <td>@haunt.Description</td>
-                <td>@haunt.Location</td>
-                <td>@haunt.ScareLevel</td>
-                <td>@haunt.Organizer</td>
-            </tr>
-        }
-</table> *@
-
+<div class="row">
+    @foreach (var Haunt in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm bg-black text-light">
+                <img src="@Haunt.ImagePath" class="card-img-top" alt="@Haunt.Title">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">@Haunt.Title</h5>
+                    <h6 class="card-subtitle mb-2 fst-italic text-light">Scare Level: @Haunt.ScareLevel</h6>
+                    <p class="card-text text-light">
+                        <strong>Date & Time:</strong>
+                        @Haunt.Creation.ToString("MMMM dd, yyyy h:mm tt")
+                    </p>
+                    <p class="card-text flex-grow-1 text-light">@Haunt.Description</p>
+                    <p class="card-text text-light"><small class="fst-italic text-light">@Haunt.Location</small></p>
+                    <a href="Haunts" class="btn btn-dark mt-auto">Learn More</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
