@@ -11,13 +11,13 @@
     {
         <div class="col-md-4 mb-4">
             <div class="card h-100 shadow-sm bg-black text-light">
-                <img src="@Haunt.ImagePath" class="card-img-top" alt="@Haunt.Title">
+                <img src="@Haunt.ImagePath" class="card-img-top" alt="@Haunt.Title" width="200">
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">@Haunt.Title</h5>
                     <h6 class="card-subtitle mb-2 fst-italic text-light">Scare Level: @Haunt.ScareLevel</h6>
                     <p class="card-text text-light">
                         <strong>Date & Time:</strong>
-                        @Haunt.Creation.ToString("MMMM dd, yyyy h:mm tt")
+                        @Haunt.Date.ToString("MMMM dd, yyyy h:mm tt")
                     </p>
                     <p class="card-text flex-grow-1 text-light">@Haunt.Description</p>
                     <p class="card-text text-light"><small class="fst-italic text-light">@Haunt.Location</small></p>

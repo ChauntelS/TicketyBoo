@@ -4,13 +4,13 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1 class="mb-4 text-center text-light">Edit Haunt</h1>
+<h1 class="mb-4 text-center text-light">Edit a Haunt</h1>
 
 
 <hr />
 <div class="row">
     <div class="col-md-4 text-light">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -18,6 +18,11 @@
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+            @* <div class="form-group">
+                <label asp-for="ImagePath" class="control-label"></label>
+                <input asp-for="ImagePath" class="form-control" />
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
+            </div> *@
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
@@ -39,9 +44,9 @@
                 <span asp-validation-for="ScareLevel" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Creation" class="control-label"></label>
-                <input asp-for="Creation" class="form-control" />
-                <span asp-validation-for="Creation" class="text-danger"></span>
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>

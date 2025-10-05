@@ -12,6 +12,9 @@
 <table class="table bg-black text-light">
     <thead>
         <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
@@ -28,7 +31,7 @@
                 @Html.DisplayNameFor(model => model.ScareLevel)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Creation)
+                @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Category)
@@ -39,6 +42,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+          @*<th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -55,7 +61,7 @@
                 @Html.DisplayFor(modelItem => item.ScareLevel)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Creation)
+                @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Category.CategoryId)

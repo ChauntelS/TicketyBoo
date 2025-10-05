@@ -18,7 +18,7 @@ namespace TicketyBoo.Models
 
         public int ScareLevel { get; set; } // Scale of 1-5
 
-        public DateTime Creation { get; set; }
+        public DateTime Date { get; set; }
 
         //Foreign key
         public int CategoryId { get; set; }
