@@ -18,10 +18,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Organizer)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ScareLevel)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -32,9 +28,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Organizer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ScareLevel)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
