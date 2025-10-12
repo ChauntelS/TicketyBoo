@@ -2,18 +2,12 @@
 {
     public class Category
     {
-        //Primary key
+        // Primary key
         public int CategoryId { get; set; }
-
         public string Title { get; set; } = string.Empty;
-
-
         public string Organizer { get; set; } = string.Empty;
 
-        public int ScareLevel { get; set; } 
-
-        //Navigation property
-        public List<Haunt>? Events { get; set; } // ? allows the list to be null
-
+        // Navigation property
+        public List<Haunt>? Haunts { get; set; }
     }
 }

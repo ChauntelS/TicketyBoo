@@ -18,18 +18,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th>
+            @* <th>
                 @Html.DisplayNameFor(model => model.Description)
-            </th>
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Location)
             </th>
-            <th>
+            @* <th>
                 @Html.DisplayNameFor(model => model.Organizer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ScareLevel)
-            </th>
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Date)
             </th>
@@ -48,23 +45,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td>
+            @* <td>
                 @Html.DisplayFor(modelItem => item.Description)
-            </td>
+            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.Location)
             </td>
-            <td>
+            @* <td>
                 @Html.DisplayFor(modelItem => item.Organizer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ScareLevel)
-            </td>
+            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryId)
+                @Html.DisplayFor(modelItem => item.Category.Title)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
