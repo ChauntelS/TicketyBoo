@@ -6,6 +6,13 @@
 
 <h1 class="mb-4 text-center text-light">Haunt Details</h1>
 
+@if (!String.IsNullOrEmpty(Model.ImagePath))
+{
+    <div>
+        <img src="/photos/@Model.ImagePath" alt="@Model.Title" class="w-50" />
+    </div>
+}
+
 <div>
     
     <hr />

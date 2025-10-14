@@ -26,6 +26,7 @@ namespace TicketyBoo.Controllers
             return View(await ticketyBooContext.ToListAsync());
         }
 
+
         // GET: Haunts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -57,14 +58,46 @@ namespace TicketyBoo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Location,Organizer,Date,CategoryId")] Haunt haunt)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Location,Organizer,Date,CategoryId,ImagePath,FormFile")] Haunt haunt)
         {
+            // Initialize values
+            haunt.CreateDate = DateTime.Now;
+
             if (ModelState.IsValid)
             {
+                //
+                // Step 1: save the file (optionally)
+                //
+                if (haunt.FormFile != null)
+                {
+                    // Create a unique filename using a Guid          
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(haunt.FormFile.FileName); // f81d4fae-7dec-11d0-a765-00a0c91e6bf6.jpg
+
+                    // Initialize the filename in photo record
+                    haunt.ImagePath = filename;
+
+                    // Get the file path to save the file. Use Path.Combine to handle diffferent OS
+                    string saveFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos", filename);
+
+                    // Save file
+                    using (FileStream fileStream = new FileStream(saveFilePath, FileMode.Create))
+                    {
+                        await haunt.FormFile.CopyToAsync(fileStream);
+                    }
+                }
+
+                //
+                // Step 2: save record in database
+                //
+
                 _context.Add(haunt);
+
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
+
             ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Title", haunt.CategoryId);
             return View(haunt);
         }

@@ -12,21 +12,16 @@
 <table class="table bg-black text-light">
     <thead>
         <tr>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.ImagePath)
-            </th>*@
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            @* <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th> *@
+            
             <th>
                 @Html.DisplayNameFor(model => model.Location)
             </th>
-            @* <th>
-                @Html.DisplayNameFor(model => model.Organizer)
-            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Date)
             </th>
@@ -39,21 +34,19 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-          @*<th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>*@
+            <td>
+                @if(!String.IsNullOrEmpty(item.ImagePath))
+                {
+                    <img src="/photos/@item.ImagePath" alt="@item.ImagePath" class="thumbnail"/>
+                }
+            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            @* <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.Location)
             </td>
-            @* <td>
-                @Html.DisplayFor(modelItem => item.Organizer)
-            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>

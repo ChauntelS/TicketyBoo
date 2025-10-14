@@ -18,7 +18,10 @@ html {
   position: relative;
   min-height: 100%;
 }
-
+.thumbnail{
+    height:100px;
+    width:100px;
+}
 body {
 /*    background-image: url('/images/background.jpg');*/
     background-color:darkslategray;
