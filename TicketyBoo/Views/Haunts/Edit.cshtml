@@ -7,27 +7,34 @@
 <h1 class="mb-4 text-center text-light">Edit a Haunt</h1>
 
 
-<hr />
 <div class="row">
-    <div class="col-md-4 bg-black text-light">
+    <div class="col-md-4 text-light">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <input type="hidden" asp-for="Id" />
 
+
             <!-- Include the original filename in the form -->
-            <input type="hidden" asp-for="ImagePath" />
+            <input type="hidden" asp-for="FormFile" />
 
             <div class="mb-3">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="mb-3">
+            @* <div class="mb-3">
                 <label asp-for="FormFile" class="control-label"></label>
                 <input asp-for="FormFile" class="form-control" />
                 <span asp-validation-for="FormFile" class="text-danger"></span>
+            </div> *@
+
+            <div class="mb-3">
+                <label asp-for="CreateDate" class="control-label"></label>
+                <input asp-for="CreateDate" class="form-control" readonly />
+                <span asp-validation-for="CreateDate" class="text-danger"></span>
             </div>
+
             <div class="mb-3">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
@@ -55,7 +62,7 @@
             </div>
 
             <div>
-                <img src="/photos/@item.ImagePath" alt="@item.ImagePath" class="thumbnail" />
+                <img src="/photos/@Model.ImagePath" alt="@Model.Title" class="thumbnail" />
             </div>
 
             <div class="mb-3">
