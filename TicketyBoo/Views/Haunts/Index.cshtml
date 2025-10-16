@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TicketyBoo.Models.Haunt>
+﻿@* @model IEnumerable<TicketyBoo.Models.Haunt>
 
 @{
     ViewData["Title"] = "Index";
@@ -9,6 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 <table class="table bg-black text-light">
     <thead>
         <tr>
@@ -37,7 +38,7 @@
             <td>
                 @if(!String.IsNullOrEmpty(item.ImagePath))
                 {
-                    <img src="/photos/@item.ImagePath" alt="@item.ImagePath" class="thumbnail"/>
+                    <img src="/photos/@item.ImagePath" alt="@item.Title" class="thumbnail"/>
                 }
             </td>
 
@@ -61,4 +62,4 @@
         </tr>
 }
     </tbody>
-</table>
+</table> *@

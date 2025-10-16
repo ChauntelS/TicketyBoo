@@ -116,6 +116,7 @@ namespace TicketyBoo.Controllers
                 return NotFound();
             }
             ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Title", haunt.CategoryId);
+
             return View(haunt);
         }
 
@@ -124,7 +125,7 @@ namespace TicketyBoo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Location,Organizer,Date,CategoryId")] Haunt haunt)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Location,Organizer,Date,CategoryId,FormFile")] Haunt haunt)
         {
             if (id != haunt.Id)
             {
@@ -133,9 +134,29 @@ namespace TicketyBoo.Controllers
 
             if (ModelState.IsValid)
             {
+                //
+                // step 1: save the file
+                //
+                if (haunt.FormFile != null)
+                {
+
+                    // determine new filename
+
+                    // set the new filename in the db record
+
+                    // upload the new file
+
+                    // delete the old file
+                }
+
+                //
+                // step 2: save in database
+                //
+
                 try
                 {
                     _context.Update(haunt);
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -149,9 +170,12 @@ namespace TicketyBoo.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Title", haunt.CategoryId);
+
             return View(haunt);
         }
 
