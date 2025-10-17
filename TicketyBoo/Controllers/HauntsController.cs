@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using TicketyBoo.Data;
 using TicketyBoo.Models;
 
 namespace TicketyBoo.Controllers
 {
+    [Authorize]
     public class HauntsController : Controller
     {
         private readonly TicketyBooContext _context;

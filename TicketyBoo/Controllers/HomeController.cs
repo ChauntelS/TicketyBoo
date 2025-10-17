@@ -2,10 +2,13 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TicketyBoo.Models;
 using TicketyBoo.Data; // Add this for your context
-using System.Linq;    // For ToList()
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;    // For ToList()
 
 namespace TicketyBoo.Controllers
 {
+
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
