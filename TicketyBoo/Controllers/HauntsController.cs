@@ -87,6 +87,11 @@ namespace TicketyBoo.Controllers
                         await haunt.FormFile.CopyToAsync(fileStream);
                     }
                 }
+                else 
+                {
+                    //if no image is uploaded 
+                    haunt.ImagePath = "logo2.png";
+                }
 
                 //
                 // Step 2: save record in database
