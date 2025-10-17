@@ -94,7 +94,7 @@ namespace TicketyBoo.Controllers
 
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),"Home");
             }
 
 
@@ -125,7 +125,7 @@ namespace TicketyBoo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Location,Organizer,Date,CategoryId,FormFile")] Haunt haunt)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Location,Organizer,Date,CategoryId,ImagePath,FormFile")] Haunt haunt)
         {
             if (id != haunt.Id)
             {
@@ -134,30 +134,52 @@ namespace TicketyBoo.Controllers
 
             if (ModelState.IsValid)
             {
-                //
-                // step 1: save the file
-                //
-                if (haunt.FormFile != null)
-                {
-
-                    // determine new filename
-
-                    // set the new filename in the db record
-
-                    // upload the new file
-
-                    // delete the old file
-                }
-
-                //
-                // step 2: save in database
-                //
-
                 try
                 {
-                    _context.Update(haunt);
+                    var existingHaunt = await _context.Haunt.AsNoTracking().FirstOrDefaultAsync(h => h.Id == id);
 
+                    if (existingHaunt == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // If a new image file is uploaded
+                    if (haunt.FormFile != null)
+                    {
+                        // Step 1: Create a unique filename
+                        string newFileName = Guid.NewGuid().ToString() + Path.GetExtension(haunt.FormFile.FileName);
+
+                        // Step 2: Determine file paths
+                        string photosPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos");
+                        string newFilePath = Path.Combine(photosPath, newFileName);
+                        string oldFilePath = Path.Combine(photosPath, existingHaunt.ImagePath ?? "");
+
+                        // Step 3: Upload the new file
+                        using (var stream = new FileStream(newFilePath, FileMode.Create))
+                        {
+                            await haunt.FormFile.CopyToAsync(stream);
+                        }
+
+                        // Step 4: Delete the old file (if it exists)
+                        if (!string.IsNullOrEmpty(existingHaunt.ImagePath) && System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath);
+                        }
+
+                        // Step 5: Update the ImagePath in DB
+                        haunt.ImagePath = newFileName;
+                    }
+                    else
+                    {
+                        // Keep the existing image if no new one was uploaded
+                        haunt.ImagePath = existingHaunt.ImagePath;
+                    }
+
+                    // Step 6: Update record in database
+                    _context.Update(haunt);
                     await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index), "Home");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -170,12 +192,9 @@ namespace TicketyBoo.Controllers
                         throw;
                     }
                 }
-
-                return RedirectToAction(nameof(Index));
             }
 
             ViewData["CategoryId"] = new SelectList(_context.Set<Category>(), "CategoryId", "Title", haunt.CategoryId);
-
             return View(haunt);
         }
 
@@ -210,7 +229,7 @@ namespace TicketyBoo.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index),"Home");
         }
 
         private bool HauntExists(int id)
