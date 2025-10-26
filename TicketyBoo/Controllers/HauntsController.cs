@@ -84,20 +84,6 @@ namespace TicketyBoo.Controllers
                 //
                 if (haunt.FormFile != null)
                 {
-                    //// Create a unique filename using a Guid          
-                    //string filename = Guid.NewGuid().ToString() + Path.GetExtension(haunt.FormFile.FileName); // f81d4fae-7dec-11d0-a765-00a0c91e6bf6.jpg
-
-                    //// Initialize the filename in photo record
-                    //haunt.ImagePath = filename;
-
-                    //// Get the file path to save the file. Use Path.Combine to handle diffferent OS
-                    //string saveFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos", filename);
-
-                    //// Save file
-                    //using (FileStream fileStream = new FileStream(saveFilePath, FileMode.Create))
-                    //{
-                    //    await haunt.FormFile.CopyToAsync(fileStream);
-                    //}
 
                     //
                     //Upload file to Azure Blob Storage
@@ -125,7 +111,7 @@ namespace TicketyBoo.Controllers
                 else 
                 {
                     //if no image is uploaded 
-                    haunt.ImagePath = "logo2.png";
+                    haunt.ImagePath = "https://nscc0239497storageblob.blob.core.windows.net/tickety-boo-uploads/BooGhost.png";
                 }
 
                 //
@@ -188,32 +174,64 @@ namespace TicketyBoo.Controllers
                     // If a new image file is uploaded
                     if (haunt.FormFile != null)
                     {
-                        // Step 1: Create a unique filename
-                        string newFileName = Guid.NewGuid().ToString() + Path.GetExtension(haunt.FormFile.FileName);
+                        //// Step 1: Create a unique filename
+                        //string newFileName = Guid.NewGuid().ToString() + Path.GetExtension(haunt.FormFile.FileName);
 
-                        // Step 2: Determine file paths
-                        string photosPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos");
-                        string newFilePath = Path.Combine(photosPath, newFileName);
-                        string oldFilePath = Path.Combine(photosPath, existingHaunt.ImagePath ?? "");
+                        //// Step 2: Determine file paths
+                        //string photosPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos");
+                        //string newFilePath = Path.Combine(photosPath, newFileName);
+                        //string oldFilePath = Path.Combine(photosPath, existingHaunt.ImagePath ?? "");
 
-                        // Step 3: Upload the new file
-                        using (var stream = new FileStream(newFilePath, FileMode.Create))
+                        //// Step 3: Upload the new file
+                        //using (var stream = new FileStream(newFilePath, FileMode.Create))
+                        //{
+                        //    await haunt.FormFile.CopyToAsync(stream);
+                        //}
+
+                        //// Step 4: Delete the old file (if it exists)
+                        //if (!string.IsNullOrEmpty(existingHaunt.ImagePath) && System.IO.File.Exists(oldFilePath))
+                        //{
+                        //    System.IO.File.Delete(oldFilePath);
+                        //}
+
+                        //// Step 5: Update the ImagePath in DB
+                        //haunt.ImagePath = newFileName;
+
+                        // Create a unique name for the new blob
+                        IFormFile fileUpload = haunt.FormFile;
+                        string blobName = Guid.NewGuid().ToString() + "_" + fileUpload.FileName;
+
+                        var blobClient = _containerClient.GetBlobClient(blobName);
+
+                        // Upload to Azure Blob Storage
+                        using (var stream = fileUpload.OpenReadStream())
                         {
-                            await haunt.FormFile.CopyToAsync(stream);
+                            await blobClient.UploadAsync(stream, new BlobHttpHeaders { ContentType = fileUpload.ContentType });
                         }
+                        // Save the new blob URL
+                        string blobURL = blobClient.Uri.ToString();
+                        haunt.ImagePath = blobURL;
 
-                        // Step 4: Delete the old file (if it exists)
-                        if (!string.IsNullOrEmpty(existingHaunt.ImagePath) && System.IO.File.Exists(oldFilePath))
+                        // Delete the old blob if it exists and isn't the default image
+                        if (!string.IsNullOrEmpty(existingHaunt.ImagePath) &&
+                            existingHaunt.ImagePath != "https://nscc0239497storageblob.blob.core.windows.net/tickety-boo-uploads/BooGhost.png")
                         {
-                            System.IO.File.Delete(oldFilePath);
+                            try
+                            {
+                                var oldBlobUri = new Uri(existingHaunt.ImagePath);
+                                string oldBlobName = Path.GetFileName(oldBlobUri.LocalPath);
+                                var oldBlobClient = _containerClient.GetBlobClient(oldBlobName);
+                                await oldBlobClient.DeleteIfExistsAsync();
+                            }
+                            catch
+                            {
+                                // Optional: log error
+                            }
                         }
-
-                        // Step 5: Update the ImagePath in DB
-                        haunt.ImagePath = newFileName;
                     }
                     else
                     {
-                        // Keep the existing image if no new one was uploaded
+                        // Keep existing image if no new one uploaded
                         haunt.ImagePath = existingHaunt.ImagePath;
                     }
 
