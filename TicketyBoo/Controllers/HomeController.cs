@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;    // For ToList()
 namespace TicketyBoo.Controllers
 {
 
-    
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

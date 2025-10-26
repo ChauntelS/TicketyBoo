@@ -7,6 +7,14 @@ namespace TicketyBoo.Controllers
 {
     public class AccountController : Controller
     {
+        // Reads values from secrets.json
+        private readonly IConfiguration _configuration;
+
+        public AccountController(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         //GET: /Account/Login
         public IActionResult Login(string returnUrl)
         {
@@ -23,7 +31,7 @@ namespace TicketyBoo.Controllers
         public async Task<IActionResult> Login(string username, string password, string returnUrl)
         {
             //Validate username and password
-            if (username == "admin" && password == "admin123")
+            if (username == _configuration["TicketyBoo_username"] && password == _configuration["TicketyBoo_password"])
             {
                 // Create a list of claims identifying the user
                 var claims = new List<Claim>
