@@ -174,29 +174,6 @@ namespace TicketyBoo.Controllers
                     // If a new image file is uploaded
                     if (haunt.FormFile != null)
                     {
-                        //// Step 1: Create a unique filename
-                        //string newFileName = Guid.NewGuid().ToString() + Path.GetExtension(haunt.FormFile.FileName);
-
-                        //// Step 2: Determine file paths
-                        //string photosPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos");
-                        //string newFilePath = Path.Combine(photosPath, newFileName);
-                        //string oldFilePath = Path.Combine(photosPath, existingHaunt.ImagePath ?? "");
-
-                        //// Step 3: Upload the new file
-                        //using (var stream = new FileStream(newFilePath, FileMode.Create))
-                        //{
-                        //    await haunt.FormFile.CopyToAsync(stream);
-                        //}
-
-                        //// Step 4: Delete the old file (if it exists)
-                        //if (!string.IsNullOrEmpty(existingHaunt.ImagePath) && System.IO.File.Exists(oldFilePath))
-                        //{
-                        //    System.IO.File.Delete(oldFilePath);
-                        //}
-
-                        //// Step 5: Update the ImagePath in DB
-                        //haunt.ImagePath = newFileName;
-
                         // Create a unique name for the new blob
                         IFormFile fileUpload = haunt.FormFile;
                         string blobName = Guid.NewGuid().ToString() + "_" + fileUpload.FileName;
@@ -225,7 +202,7 @@ namespace TicketyBoo.Controllers
                             }
                             catch
                             {
-                                // Optional: log error
+                               
                             }
                         }
                     }
