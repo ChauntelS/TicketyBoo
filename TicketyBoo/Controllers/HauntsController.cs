@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,11 +16,21 @@ namespace TicketyBoo.Controllers
     [Authorize]
     public class HauntsController : Controller
     {
+        private readonly IConfiguration _configuration;
         private readonly TicketyBooContext _context;
+        private readonly BlobContainerClient _containerClient;
 
-        public HauntsController(TicketyBooContext context)
+        //Constructor
+        public HauntsController(IConfiguration configuration, TicketyBooContext context)
         {
             _context = context;
+            
+            _configuration = configuration;
+
+            //Setup blob container client
+            var connectionString = _configuration.GetConnectionString("AzureStorage");
+            var containerName = "tickety-boo-uploads";
+            _containerClient = new BlobContainerClient(connectionString, containerName);
         }
 
         // GET: Haunts
@@ -72,20 +84,43 @@ namespace TicketyBoo.Controllers
                 //
                 if (haunt.FormFile != null)
                 {
-                    // Create a unique filename using a Guid          
-                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(haunt.FormFile.FileName); // f81d4fae-7dec-11d0-a765-00a0c91e6bf6.jpg
+                    //// Create a unique filename using a Guid          
+                    //string filename = Guid.NewGuid().ToString() + Path.GetExtension(haunt.FormFile.FileName); // f81d4fae-7dec-11d0-a765-00a0c91e6bf6.jpg
 
-                    // Initialize the filename in photo record
-                    haunt.ImagePath = filename;
+                    //// Initialize the filename in photo record
+                    //haunt.ImagePath = filename;
 
-                    // Get the file path to save the file. Use Path.Combine to handle diffferent OS
-                    string saveFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos", filename);
+                    //// Get the file path to save the file. Use Path.Combine to handle diffferent OS
+                    //string saveFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos", filename);
 
-                    // Save file
-                    using (FileStream fileStream = new FileStream(saveFilePath, FileMode.Create))
+                    //// Save file
+                    //using (FileStream fileStream = new FileStream(saveFilePath, FileMode.Create))
+                    //{
+                    //    await haunt.FormFile.CopyToAsync(fileStream);
+                    //}
+
+                    //
+                    //Upload file to Azure Blob Storage
+                    //
+
+                    // store the file to upload in fileUpload
+                    IFormFile fileUpload = haunt.FormFile;
+
+                    // create a unique filename for the blob
+                    string blobName = Guid.NewGuid().ToString() + "_" + fileUpload.FileName;
+
+                    var blobClient = _containerClient.GetBlobClient(blobName);
+
+                    using (var stream = fileUpload.OpenReadStream())
                     {
-                        await haunt.FormFile.CopyToAsync(fileStream);
+                        await blobClient.UploadAsync(stream, new BlobHttpHeaders { ContentType = fileUpload.ContentType });
                     }
+
+                    string blobURL = blobClient.Uri.ToString();
+
+                    // assgin the blob URL to the record to save in Db
+                    haunt.ImagePath = blobURL;
+
                 }
                 else 
                 {

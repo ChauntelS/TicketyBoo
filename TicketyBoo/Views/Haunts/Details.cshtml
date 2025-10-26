@@ -9,7 +9,7 @@
 @if (!String.IsNullOrEmpty(Model.ImagePath))
 {
     <div>
-        <img src="/photos/@Model.ImagePath" alt="@Model.Title" class="w-50 align-content-center"  />
+        <img src="@Model.ImagePath" alt="@Model.Title" class="w-50 align-content-center"  />
     </div>
 }
 
@@ -56,6 +56,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Edit"  asp-route-id="@Model?.Id">Edit</a> |
     <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>

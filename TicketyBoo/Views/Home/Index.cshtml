@@ -6,9 +6,14 @@
 
 <h1 class="mb-4 text-center text-light">Haunt Index</h1>
 
-<p>
+<form>
+    <p>
+        <a asp-controller="Haunts" button type="button" class="btn btn-outline-light" asp-action="Create">Create New Haunt</a>
+    </p>
+</form>
+@* <p>
     <a asp-controller="Haunts" asp-action="Create">Create New</a>
-</p>
+</p> *@
 
 <table class="table bg-black text-light">
     <thead>
@@ -38,7 +43,7 @@
             <td>
                 @if(!String.IsNullOrEmpty(item.ImagePath))
                 {
-                    <img src="/photos/@item.ImagePath" alt="@item.Title" class="thumbnail"/>
+                    <img src="@item.ImagePath" alt="@item.Title" class="thumbnail"/>
                 }
             </td>
 
@@ -55,9 +60,9 @@
                 @Html.DisplayFor(modelItem => item.Category.Title)
             </td>
             <td>
-                <a  asp-controller="Haunts" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-controller="Haunts" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-controller="Haunts" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-controller="Haunts" button type="button" class="btn btn-outline-dark" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-controller="Haunts" button type="button" class="btn btn-outline-dark" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-controller="Haunts" button type="button" class="btn btn-outline-dark" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
