@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using TicketyBoo.Models;
 using TicketyBoo.Data; // Add this for your context
 using System.Linq;
-using Microsoft.AspNetCore.Authorization;    // For ToList()
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;    // For ToList()
 
 namespace TicketyBoo.Controllers
 {
@@ -22,14 +23,15 @@ namespace TicketyBoo.Controllers
 
         public IActionResult Index()
         {
-            var haunts = _context.Haunt.ToList(); // Fetch from database
+            var haunts = _context.Haunt
+                .Include(h => h.Category)
+                .ToList();
+               
+
             return View(haunts);
         }
 
-        public IActionResult Details()
-        {
-            return View();
-        }
+       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
