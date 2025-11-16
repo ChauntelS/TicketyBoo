@@ -22,8 +22,13 @@ namespace TicketyBoo.Models
         // Navigation property
         public Category? Category { get; set; }
 
+        public List<Purchase>? Purchases { get; set; }
+
+
         [NotMapped]
         [Display(Name = "Photograph")]
         public IFormFile? FormFile { get; set; } // nullable
+
+        
     }
 }
