@@ -53,6 +53,39 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Category.Title)
         </dd>
+        @* <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Purchase.Quantity)
+        </dd> *@
+
+        @if (Model.Purchases != null && Model.Purchases.Any())
+        {
+            <h4 class="text-light mt-4">Purchases</h4>
+            <table class="table table-sm table-dark">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Email</th>
+                        <th>Quantity</th>
+                        <th>Purchase Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model.Purchases)
+                    {
+                        <tr>
+                            <td>@p.CustomerName</td>
+                            <td>@p.CustomerEmail</td>
+                            <td>@p.Quantity</td>
+                            <td>@(p.CreateDate.ToString("g"))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-light">No purchases yet for this haunt.</p>
+        }
     </dl>
 </div>
 <div>

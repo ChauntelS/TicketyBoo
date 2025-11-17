@@ -51,7 +51,9 @@ namespace TicketyBoo.Controllers
 
             var haunt = await _context.Haunt
                 .Include(h => h.Category)
+                .Include(h => h.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (haunt == null)
             {
                 return NotFound();
