@@ -19,7 +19,7 @@ namespace TicketyBoo.Models
 
         public string CardType { get; set; } = string.Empty;
 
-        public int CardNum { get; set; } = 0;
+        public string CardNum { get; set; } = string.Empty;
 
         public int CardExpire { get; set; } = 0;
 
